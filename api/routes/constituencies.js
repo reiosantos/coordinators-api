@@ -1,0 +1,26 @@
+import express from 'express';
+import ConstituencyActions from '../actions/constituencies';
+import ValidatorMiddleware from '../middlewares/validatorMiddleware';
+
+const constituencyRouter = express.Router({});
+
+constituencyRouter
+	.get('/constituencies', ConstituencyActions.getAllConstituencies)
+	.get('/constituencies/:id',
+		ValidatorMiddleware.validate('validateUUIDParam'),
+		ValidatorMiddleware.returnErrors,
+		ConstituencyActions.getConstituency)
+	.post('/constituencies',
+		ValidatorMiddleware.validate('createConstituency'),
+		ValidatorMiddleware.returnErrors,
+		ConstituencyActions.createConstituency)
+	.put('/constituencies/:id',
+		ValidatorMiddleware.validate('updateConstituency'),
+		ValidatorMiddleware.returnErrors,
+		ConstituencyActions.updateConstituency)
+	.delete('/constituencies/:id',
+		ValidatorMiddleware.validate('validateUUIDParam'),
+		ValidatorMiddleware.returnErrors,
+		ConstituencyActions.deleteConstituency);
+
+export default constituencyRouter;

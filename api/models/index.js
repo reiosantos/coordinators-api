@@ -33,7 +33,6 @@ class DatabaseWrapper {
 		const Modal = ModelFactory.getModel(objectName);
 		const modifiedWhere = Helpers.modifyWhereClause(objectName, where);
 		
-		console.log(modifiedWhere);
 		const data = await Modal.findAll({
 			attributes,
 			where : modifiedWhere,

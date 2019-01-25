@@ -14,6 +14,14 @@ module.exports = {
 		password: {
 			type: Sequelize.STRING
 		},
+		isSuperUser: {
+			type: Sequelize.BOOLEAN,
+			defaultValue: false
+		},
+		isAdmin: {
+			type: Sequelize.BOOLEAN,
+			defaultValue: false
+		},
 		createdAt: {
 			allowNull: false,
 			type: Sequelize.DATE

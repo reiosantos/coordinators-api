@@ -8,18 +8,22 @@ export const signup = async (req, res) => {
 	const { body: user } = req;
 	try {
 		user.password = await hashPassword(user.password);
+		const userData = await DatabaseWrapper.findOne(USER_MODAL, { username: user.username });
+		
+		if (userData && userData.id ) {
+			return res.status(200).json({
+				message: 'This username is already taken, please choose a different name'
+			});
+		}
 		const data = await DatabaseWrapper.createOne(USER_MODAL, user);
 		return res.status(201).json(data);
 	} catch (err) {
-		let resp = `Error: ${err}`;
+		let resp = err;
 		if (err.original.errno === 1452) {
 			resp = 'This representative does not exists';
 		}
 		if (err.name === 'SequelizeUniqueConstraintError') {
-			return res.status(400).json({
-				error: 'Sorry, you can only create an'
-					+ ' account once for each user'
-			});
+			resp = 'Sorry, This user already has an account.';
 		}
 		return res.status(400).json({ error: resp });
 	}

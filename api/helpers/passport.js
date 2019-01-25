@@ -1,8 +1,8 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import { USER_MODAL } from '../api/constants';
-import { validatePassword } from '../api/helpers/auth.helpers';
-import DatabaseWrapper from '../api/models';
+import { USER_MODAL } from '../constants';
+import { validatePassword } from './auth.helpers';
+import DatabaseWrapper from '../models';
 
 passport.use(new LocalStrategy({
 

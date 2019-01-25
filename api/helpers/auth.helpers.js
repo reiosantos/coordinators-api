@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-export function getUserFullName(user) {
+export function getUserFullName(user = {}) {
 	return `${user.firstName} ${user.lastName}`;
 }
 
@@ -27,7 +27,7 @@ export function generateJWTToken(userObject) {
 }
 
 export function toAuthJSON(userObject) {
-	const { Representative: { dataValues: representative } } = userObject;
+	const { Representative: { dataValues: representative } = {} } = userObject;
 	return {
 		_id: userObject.id,
 		name: getUserFullName(representative),

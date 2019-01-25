@@ -37,6 +37,6 @@ app.use((req, res) => res.status(404)
 		message: 'Not Found. Use /api/v1 to access the api.'
 	}));
 
-require('../config/passport');
+require('./helpers/passport');
 
 export default app;

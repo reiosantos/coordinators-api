@@ -8,10 +8,19 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		username: {
 			allowNull: false,
+			unique: true,
 			type: DataTypes.STRING
 		},
 		password: {
 			type: DataTypes.STRING
+		},
+		isSuperUser: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false
+		},
+		isAdmin: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false
 		}
 	}, {});
 	User.associate = (models) => {

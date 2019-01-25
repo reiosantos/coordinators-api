@@ -6,8 +6,12 @@ class ValidatorHelper {
 		return [
 			body('username', 'Username is required').exists(),
 			body('password', 'Password is required').exists(),
-			body('representativeId', 'This is not a valid representative')
-				.exists().isUUID()
+			body('isAdmin', 'A boolean value is required')
+				.optional().isBoolean(),
+			body('isSuperUser', 'A boolean value is required')
+				.optional().isBoolean(),
+			body('representativeId',
+				'This is not a valid representative').isUUID()
 		];
 	}
 

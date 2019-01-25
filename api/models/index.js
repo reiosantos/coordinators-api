@@ -1,3 +1,4 @@
+import Helpers from '../helpers';
 import ModelFactory from './models.factory';
 
 class DatabaseWrapper {
@@ -30,9 +31,12 @@ class DatabaseWrapper {
 		include = [{ all: true }], order = [], raw = false
 	) {
 		const Modal = ModelFactory.getModel(objectName);
+		const modifiedWhere = Helpers.modifyWhereClause(objectName, where);
+		
+		console.log(modifiedWhere);
 		const data = await Modal.findAll({
 			attributes,
-			where,
+			where : modifiedWhere,
 			raw,
 			include,
 			order

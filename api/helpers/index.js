@@ -1,6 +1,22 @@
+import { REPRESENTATIVE_MODAL, USER_MODAL } from '../constants';
 import { toAuthJSON } from './auth.helpers';
+import { Sequelize} from 'sequelize';
+
+const Op = Sequelize.Op;
 
 class Helpers {
+	static modifyWhereClause(objectModel, where = {}) {
+		const obj = {};
+		if (objectModel === USER_MODAL) {
+			obj.username = { [Op.ne]: 'admin' };
+		} else if (objectModel === REPRESENTATIVE_MODAL) {
+			obj.firstName = { [Op.ne]: 'admin' };
+		} else {
+			obj[`${objectModel}Name`] = { [Op.ne]: 'admin' };
+		}
+		return { ...where, ...obj };
+	}
+	
 	static getErrorMessage(error) {
 		let message = null;
 		if (error.code === 11000) {

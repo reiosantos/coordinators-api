@@ -2,7 +2,7 @@
 
 sequelize model:create --name Representative --attributes "firstName:string, lastName:string, email:string, dateOfBirth:date, contact:string"
 
-sequelize model:create --name User --attributes "username:string, password:string"
+sequelize model:create --name User --attributes "username:string, password:string, isAdmin:boolean, isSuperUser:boolean"
 
 sequelize model:create --name Constituency  --attributes "constituencyName:string"
 

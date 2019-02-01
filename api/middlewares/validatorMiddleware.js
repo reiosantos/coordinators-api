@@ -2,16 +2,15 @@ import { body, param } from 'express-validator/check';
 import Utils from '../util';
 
 class ValidatorHelper {
-	static validateCreateAccount() {
+	static validateCreateUser() {
 		return [
 			body('username', 'Username is required').exists(),
+			body('contact', 'Phone number is required').exists(),
 			body('password', 'Password is required').exists(),
 			body('isAdmin', 'A boolean value is required')
 				.optional().isBoolean(),
 			body('isSuperUser', 'A boolean value is required')
-				.optional().isBoolean(),
-			body('representativeId',
-				'This is not a valid representative').isUUID()
+				.optional().isBoolean()
 		];
 	}
 
@@ -69,6 +68,19 @@ class ValidatorHelper {
 		];
 	}
 
+	static validateUpdateUser() {
+		return [
+			param('id', 'The user ID provided is invalid').isUUID(),
+			body('username', 'Username is required').exists(),
+			body('contact', 'Phone number is required').exists(),
+			body('password', 'Password is required').optional(),
+			body('isAdmin', 'A boolean value is required')
+				.optional().isBoolean(),
+			body('isSuperUser', 'A boolean value is required')
+				.optional().isBoolean()
+		];
+	}
+	
 	static validateUpdateRepresentative() {
 		return [
 			param('id', 'The user ID provided is invalid').isUUID(),
@@ -142,8 +154,8 @@ class ValidatorHelper {
 class ValidatorMiddleware {
 	static validate(method) {
 		switch (method) {
-			case 'createAccount':
-				return ValidatorHelper.validateCreateAccount();
+			case 'createUser':
+				return ValidatorHelper.validateCreateUser();
 			case 'createRepresentative':
 				return ValidatorHelper.validateCreateRepresentative();
 			case 'createConstituency':
@@ -154,6 +166,8 @@ class ValidatorMiddleware {
 				return ValidatorHelper.validateCreateParish();
 			case 'createVillage':
 				return ValidatorHelper.validateCreateVillage();
+			case 'updateUser':
+				return ValidatorHelper.validateUpdateUser();
 			case 'updateRepresentative':
 				return ValidatorHelper.validateUpdateRepresentative();
 			case 'updateConstituency':
@@ -166,8 +180,10 @@ class ValidatorMiddleware {
 				return ValidatorHelper.validateUpdateVillage();
 			case 'validateUUIDParam':
 				return [
-					param('id', 'The user ID provided is invalid').exists()
-						.isUUID()
+					param(
+						'id',
+						'The requested record could not be found')
+						.exists().isUUID()
 				];
 			default:
 				return [];

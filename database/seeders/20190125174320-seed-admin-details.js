@@ -58,9 +58,9 @@ module.exports = {
       }], {}),
       await queryInterface.bulkInsert('Users', [{
         id: '78989115-3d00-4605-9a19-3e5627812212',
-        representativeId: '36107f30-9381-4bdf-aad1-88acde24cd97',
         username: 'admin',
         password: password,
+        contact: '1234567890',
         isSuperUser: true,
         createdAt: formatDateForDatabase(),
         updatedAt: formatDateForDatabase()

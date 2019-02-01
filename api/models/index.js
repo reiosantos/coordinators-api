@@ -101,7 +101,7 @@ class DatabaseWrapper {
 		if (!data.dataValues) {
 			if (data instanceof TypeError) {
 				throw new Error(
-					`We were unable to update this ${objectName}. check your submission details`
+					`We were unable to update this ${objectName}. Its probably due to an invalid ID`
 				);
 			}
 			throw new Error(

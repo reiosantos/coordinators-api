@@ -9,9 +9,13 @@ module.exports = {
 		},
 		username: {
 			allowNull: false,
+			unique: true,
 			type: Sequelize.STRING
 		},
 		password: {
+			type: Sequelize.STRING
+		},
+		contact: {
 			type: Sequelize.STRING
 		},
 		isSuperUser: {

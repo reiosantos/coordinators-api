@@ -32,7 +32,7 @@ class Helpers {
 	static userCallback(error, resUser, res, status = 200, signup = false) {
 		if (error) {
 			const message = Helpers.getErrorMessage(error);
-			return res.status(400).json({ error: message });
+			return res.status(400).json({ message });
 		}
 
 		const docs = signup ? toAuthJSON(resUser) : resUser;
@@ -43,7 +43,7 @@ class Helpers {
 				? { user: { ...docs, password: undefined, __v: undefined } }
 				: { users: docs };
 		}
-		return res.status(status).json({ ...data, error });
+		return res.status(status).json({ ...data, message: error });
 	}
 }
 

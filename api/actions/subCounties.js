@@ -4,7 +4,7 @@ import DatabaseWrapper from '../models';
 class SubCountyActions {
 	static async getAllSubCounties(req, res) {
 		const subCounties = await DatabaseWrapper.findAll(SUB_COUNTY_MODAL, {});
-		return res.status(200).json({ subCounties });
+		return res.status(200).json({ records: subCounties });
 	}
 
 	static async getSubCounty(req, res) {
@@ -12,7 +12,7 @@ class SubCountyActions {
 
 		const subCounty = await DatabaseWrapper.findOne(SUB_COUNTY_MODAL, subCountyId);
 
-		return res.status(200).json({ subCounty });
+		return res.status(200).json({ record: subCounty });
 	}
 
 	static async createSubCounty(req, res) {
@@ -20,12 +20,12 @@ class SubCountyActions {
 
 		try {
 			const subCounty = await DatabaseWrapper.createOne(SUB_COUNTY_MODAL, data);
-			return res.status(201).json({ subCounty });
+			return res.status(201).json({ record: subCounty });
 		} catch (err) {
 			if (err.name === 'SequelizeForeignKeyConstraintError') {
-				return res.status(400).json({ error: `Could not find the ${err.table} selected` });
+				return res.status(400).json({ message: `Could not find the ${err.table} selected` });
 			}
-			return res.status(400).json({ error: err.errors[0].message });
+			return res.status(400).json({ message: err.errors[0].message });
 		}
 	}
 
@@ -38,9 +38,9 @@ class SubCountyActions {
 				SUB_COUNTY_MODAL, { id: subCountyId }, update
 			);
 
-			return res.status(202).json({ subCounty });
+			return res.status(202).json({ record: subCounty });
 		} catch (err) {
-			return res.status(400).json({ error: err.message });
+			return res.status(400).json({ message: err.message });
 		}
 	}
 

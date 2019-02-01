@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-	const User = sequelize.define('User', {
+	return sequelize.define('User', {
 		id: {
 			allowNull: false,
 			primaryKey: true,
@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
 		password: {
 			type: DataTypes.STRING
 		},
+		contact: {
+			type: DataTypes.STRING
+		},
 		isSuperUser: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false
@@ -23,13 +26,4 @@ module.exports = (sequelize, DataTypes) => {
 			defaultValue: false
 		}
 	}, {});
-	User.associate = (models) => {
-		// associations can be defined here
-		User.belongsTo(models.Representative, {
-			foreignKey: 'representativeId',
-			targetKey: 'id',
-			onDelete: 'CASCADE'
-		});
-	};
-	return User;
 };

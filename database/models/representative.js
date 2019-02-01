@@ -40,10 +40,6 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey: 'representativeId',
 			onDelete: 'SET NULL'
 		});
-		Representative.hasOne(models.User, {
-			foreignKey: 'representativeId',
-			onDelete: 'CASCADE'
-		});
 		Representative.belongsTo(models.Village, {
 			foreignKey: 'villageId',
 			targetKey: 'id',

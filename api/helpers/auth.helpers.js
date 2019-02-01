@@ -21,7 +21,7 @@ export function generateJWTToken(userObject) {
 
 	expiry.setDate(today.getDate() + 2);
 	return jwt.sign({
-		id: userObject.id,
+		identity: userObject.id,
 		exp: Number.parseInt(expiry.getTime() / 100, 10)
 	}, process.env.JWT_SECRET);
 }

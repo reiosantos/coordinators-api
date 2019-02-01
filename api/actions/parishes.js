@@ -4,7 +4,7 @@ import DatabaseWrapper from '../models';
 class ParishActions {
 	static async getAllParishes(req, res) {
 		const parishes = await DatabaseWrapper.findAll(PARISH_MODAL, {});
-		return res.status(200).json({ parishes });
+		return res.status(200).json({ records: parishes });
 	}
 
 	static async getParish(req, res) {
@@ -12,7 +12,7 @@ class ParishActions {
 
 		const parish = await DatabaseWrapper.findOne(PARISH_MODAL, parishId);
 
-		return res.status(200).json({ parish });
+		return res.status(200).json({ record: parish });
 	}
 
 	static async createParish(req, res) {
@@ -20,12 +20,12 @@ class ParishActions {
 
 		try {
 			const parish = await DatabaseWrapper.createOne(PARISH_MODAL, data);
-			return res.status(201).json({ parish });
+			return res.status(201).json({ record: parish });
 		} catch (err) {
 			if (err.name === 'SequelizeForeignKeyConstraintError') {
-				return res.status(400).json({ error: `Could not find the ${err.table} selected` });
+				return res.status(400).json({ message: `Could not find the ${err.table} selected` });
 			}
-			return res.status(400).json({ error: err.errors[0].message });
+			return res.status(400).json({ message: err.errors[0].message });
 		}
 	}
 
@@ -38,9 +38,9 @@ class ParishActions {
 				PARISH_MODAL, { id: parishId }, update
 			);
 
-			return res.status(202).json({ parish });
+			return res.status(202).json({ record: parish });
 		} catch (err) {
-			return res.status(400).json({ error: err.message });
+			return res.status(400).json({ message: err.message });
 		}
 	}
 

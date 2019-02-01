@@ -1,5 +1,4 @@
 
-
 module.exports = {
 	up: async (queryInterface, Sequelize) => [
 		await queryInterface.addColumn('Constituencies', 'representativeId', {
@@ -66,16 +65,6 @@ module.exports = {
 				key: 'id'
 			}
 		}),
-		await queryInterface.addColumn('Users', 'representativeId', {
-			type: Sequelize.UUID,
-			onDelete: 'CASCADE',
-			unique: true,
-			allowNull: false,
-			references: {
-				model: 'Representatives',
-				key: 'id'
-			}
-		})
 	],
 
 	down: async (queryInterface, Sequelize) => [
@@ -86,7 +75,6 @@ module.exports = {
 		await queryInterface.removeColumn('Parishes', 'representativeId'),
 		await queryInterface.removeColumn('Villages', 'parishId'),
 		await queryInterface.removeColumn('Villages', 'representativeId'),
-		await queryInterface.removeColumn('Representatives', 'villageId'),
-		await queryInterface.removeColumn('Users', 'representativeId')
+		await queryInterface.removeColumn('Representatives', 'villageId')
 	]
 };

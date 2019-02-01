@@ -7,7 +7,7 @@ class RepresentativeActions {
 		const representatives = await DatabaseWrapper.findAll(
 			REPRESENTATIVE_MODAL, {}
 		);
-		return res.status(200).json({ representatives });
+		return res.status(200).json({ records: representatives });
 	}
 
 	static async getRepresentative(req, res) {
@@ -15,7 +15,7 @@ class RepresentativeActions {
 
 		const representative = await DatabaseWrapper.findOne(REPRESENTATIVE_MODAL, userId);
 
-		return res.status(200).json({ representative });
+		return res.status(200).json({ record: representative });
 	}
 
 	static async createRepresentative(req, res) {
@@ -24,22 +24,22 @@ class RepresentativeActions {
 			const newDate = Utils.formatDateForDatabase(data.dateOfBirth);
 			const representative = await DatabaseWrapper.createOne(REPRESENTATIVE_MODAL,
 				{ ...data, dateOfBirth: newDate });
-			return res.status(201).json({ representative });
+			return res.status(201).json({ record: representative });
 		} catch (err) {
 			if (err.name === 'SequelizeForeignKeyConstraintError') {
-				return res.status(400).json({ error: `Could not find the ${err.table} selected` });
+				return res.status(400).json({ message: `Could not find the ${err.table} selected` });
 			}
 			if (err.name === 'SequelizeDatabaseError') {
 				return res.status(400).json({
-					error: `Invalid value for date ${data.dateOfBirth}`
+					message: `Invalid value for date ${data.dateOfBirth}`
 				});
 			}
 			if (err.name === 'SequelizeUniqueConstraintError') {
 				return res.status(400).json({
-					error: `This phone number has already been used ${data.contact}`
+					message: `This phone number has already been used ${data.contact}`
 				});
 			}
-			return res.status(400).json({ error: err.message });
+			return res.status(400).json({ message: err.message });
 		}
 	}
 
@@ -52,9 +52,9 @@ class RepresentativeActions {
 				REPRESENTATIVE_MODAL, { id: userId }, update
 			);
 
-			return res.status(202).json({ representative });
+			return res.status(202).json({ record: representative });
 		} catch (err) {
-			return res.status(400).json({ error: err.message });
+			return res.status(400).json({ message: err.message });
 		}
 	}
 

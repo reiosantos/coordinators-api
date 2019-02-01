@@ -16,16 +16,13 @@ export const signup = async (req, res) => {
 			});
 		}
 		const data = await DatabaseWrapper.createOne(USER_MODAL, user);
-		return res.status(201).json(data);
+		return res.status(201).json({ record: data });
 	} catch (err) {
 		let resp = err;
-		if (err.original.errno === 1452) {
-			resp = 'This representative does not exists';
-		}
 		if (err.name === 'SequelizeUniqueConstraintError') {
 			resp = 'Sorry, This user already has an account.';
 		}
-		return res.status(400).json({ error: resp });
+		return res.status(400).json({ message: resp });
 	}
 };
 
@@ -33,18 +30,18 @@ export const login = (req, res, next) => {
 	const { body: user } = req;
 
 	if (!user.username) {
-		return res.status(422)
-			.json({ errors: { username: 'username is required' } });
+		return res.status(400)
+			.json({ message: { username: 'username is required' } });
 	}
 
 	if (!user.password) {
-		return res.status(422)
-			.json({ errors: { password: 'password is required' } });
+		return res.status(400)
+			.json({ message: { password: 'password is required' } });
 	}
 
 	return passport.authenticate('local', { session: false },
 		(err, passportUser, info) => {
-			if (err) return res.status(400).json({ err });
+			if (err) return res.status(400).json({ message: err });
 
 			const userObject = passportUser;
 			if (userObject) {
@@ -52,6 +49,6 @@ export const login = (req, res, next) => {
 				return res.json({ user: toAuthJSON(userObject) });
 			}
 			return res.status(400)
-				.json(err || info);
+				.json({ message: err || info });
 		})(req, res, next);
 };

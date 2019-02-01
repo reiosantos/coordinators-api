@@ -4,7 +4,7 @@ import DatabaseWrapper from '../models';
 class ConstituencyActions {
 	static async getAllConstituencies(req, res) {
 		const constituencies = await DatabaseWrapper.findAll(CONSTITUENCY_MODAL, {});
-		return res.status(200).json({ constituencies });
+		return res.status(200).json({ records: constituencies });
 	}
 
 	static async getConstituency(req, res) {
@@ -12,7 +12,7 @@ class ConstituencyActions {
 
 		const constituency = await DatabaseWrapper.findOne(CONSTITUENCY_MODAL, constituencyId);
 
-		return res.status(200).json({ constituency });
+		return res.status(200).json({ record: constituency });
 	}
 
 	static async createConstituency(req, res) {
@@ -20,14 +20,14 @@ class ConstituencyActions {
 
 		try {
 			const constituency = await DatabaseWrapper.createOne(CONSTITUENCY_MODAL, data);
-			return res.status(201).json({ constituency });
+			return res.status(201).json({ record: constituency });
 		} catch (err) {
 			if (err.name === 'SequelizeForeignKeyConstraintError') {
 				return res.status(400).json({
-					error: `Could not find the ${err.table} selected`
+					message: `Could not find the ${err.table} selected`
 				});
 			}
-			return res.status(400).json({ error: err.errors[0].message });
+			return res.status(400).json({ message: err.errors[0].message });
 		}
 	}
 
@@ -40,9 +40,9 @@ class ConstituencyActions {
 				CONSTITUENCY_MODAL, { id: constituencyId }, update
 			);
 
-			return res.status(202).json({ constituency });
+			return res.status(202).json({ record: constituency });
 		} catch (err) {
-			return res.status(400).json({ error: err.message });
+			return res.status(400).json({ message: err.message });
 		}
 	}
 

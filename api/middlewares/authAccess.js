@@ -8,7 +8,7 @@ class AuthAccessMiddleware {
 	static async isSuperUser(req, res, next) {
 		const token = getTokenFromHeaders(req, res);
 		const tokenData = jwt.decode(token);
-		const user = await DatabaseWrapper.findOne(USER_MODAL, tokenData.id);
+		const user = await DatabaseWrapper.findOne(USER_MODAL, tokenData.identity);
 		
 		if (user && user.isSuperUser) return next();
 		
@@ -20,7 +20,7 @@ class AuthAccessMiddleware {
 	static async isAdmin(req, res, next) {
 		const token = getTokenFromHeaders(req, res);
 		const tokenData = jwt.decode(token);
-		const user = await DatabaseWrapper.findOne(USER_MODAL, tokenData.id);
+		const user = await DatabaseWrapper.findOne(USER_MODAL, tokenData.identity);
 		
 		if (user && (user.isAdmin || user.isSuperUser)) return next();
 		

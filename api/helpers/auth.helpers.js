@@ -1,10 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-export function getUserFullName(user = {}) {
-	return `${user.firstName} ${user.lastName}`;
-}
-
 export function validatePassword(plain, hashed) {
 	return bcrypt.compare(plain, hashed);
 }
@@ -22,15 +18,16 @@ export function generateJWTToken(userObject) {
 	expiry.setDate(today.getDate() + 2);
 	return jwt.sign({
 		identity: userObject.id,
+		isAdmin: userObject.isAdmin,
+		isSuperUser: userObject.isSuperUser,
 		exp: Number.parseInt(expiry.getTime() / 100, 10)
 	}, process.env.JWT_SECRET);
 }
 
 export function toAuthJSON(userObject) {
-	const { Representative: { dataValues: representative } = {} } = userObject;
 	return {
 		_id: userObject.id,
-		name: getUserFullName(representative),
-		token: generateJWTToken(userObject)
+		name: userObject.username,
+		token: userObject.token
 	};
 }

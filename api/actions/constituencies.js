@@ -34,6 +34,9 @@ class ConstituencyActions {
 	static async updateConstituency(req, res) {
 		const { id: constituencyId } = req.params;
 		const update = req.body;
+		if (!update.representativeId || update.representativeId === 'null') {
+			update.representativeId = null;
+		}
 
 		try {
 			const constituency = await DatabaseWrapper.updateOne(

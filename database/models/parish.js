@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
 		Parish.belongsTo(models.Representative, {
 			foreignKey: 'representativeId',
 			targetKey: 'id',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 		Parish.hasMany(models.Village, {
 			foreignKey: 'parishId',

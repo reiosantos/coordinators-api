@@ -32,7 +32,10 @@ class SubCountyActions {
 	static async updateSubCounty(req, res) {
 		const { id: subCountyId } = req.params;
 		const update = req.body;
-
+		if (!update.representativeId || update.representativeId === 'null') {
+			update.representativeId = null;
+		}
+		
 		try {
 			const subCounty = await DatabaseWrapper.updateOne(
 				SUB_COUNTY_MODAL, { id: subCountyId }, update

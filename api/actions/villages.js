@@ -32,7 +32,10 @@ class VillageActions {
 	static async updateVillage(req, res) {
 		const { id: villageId } = req.params;
 		const update = req.body;
-
+		if (!update.representativeId || update.representativeId === 'null') {
+			update.representativeId = null;
+		}
+		
 		try {
 			const village = await DatabaseWrapper.updateOne(
 				VILLAGE_MODAL, { id: villageId }, update

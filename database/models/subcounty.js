@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
 		SubCounty.belongsTo(models.Representative, {
 			foreignKey: 'representativeId',
 			targetKey: 'id',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 		SubCounty.hasMany(models.Parish, {
 			foreignKey: 'subCountyId',

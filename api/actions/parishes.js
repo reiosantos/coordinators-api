@@ -32,7 +32,10 @@ class ParishActions {
 	static async updateParish(req, res) {
 		const { id: parishId } = req.params;
 		const update = req.body;
-
+		if (!update.representativeId || update.representativeId === 'null') {
+			update.representativeId = null;
+		}
+		
 		try {
 			const parish = await DatabaseWrapper.updateOne(
 				PARISH_MODAL, { id: parishId }, update

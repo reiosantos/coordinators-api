@@ -4,6 +4,7 @@ module.exports = {
 		await queryInterface.addColumn('Constituencies', 'representativeId', {
 			type: Sequelize.UUID,
 			onDelete: 'SET NULL',
+			allowNull: true,
 			references: {
 				model: 'Representatives',
 				key: 'id'
@@ -20,6 +21,7 @@ module.exports = {
 		await queryInterface.addColumn('SubCounties', 'representativeId', {
 			type: Sequelize.UUID,
 			onDelete: 'SET NULL',
+			allowNull: true,
 			references: {
 				model: 'Representatives',
 				key: 'id'
@@ -36,6 +38,7 @@ module.exports = {
 		await queryInterface.addColumn('Parishes', 'representativeId', {
 			type: Sequelize.UUID,
 			onDelete: 'SET NULL',
+			allowNull: true,
 			references: {
 				model: 'Representatives',
 				key: 'id'
@@ -52,6 +55,7 @@ module.exports = {
 		await queryInterface.addColumn('Villages', 'representativeId', {
 			type: Sequelize.UUID,
 			onDelete: 'SET NULL',
+			allowNull: true,
 			references: {
 				model: 'Representatives',
 				key: 'id'
@@ -60,6 +64,7 @@ module.exports = {
 		await queryInterface.addColumn('Representatives', 'villageId', {
 			type: Sequelize.UUID,
 			onDelete: 'SET NULL',
+			allowNull: true,
 			references: {
 				model: 'Villages',
 				key: 'id'

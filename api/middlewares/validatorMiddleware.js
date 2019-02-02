@@ -1,4 +1,5 @@
 import { body, param } from 'express-validator/check';
+import validator from 'validator'
 import Utils from '../util';
 
 class ValidatorHelper {
@@ -29,6 +30,9 @@ class ValidatorHelper {
 				return value;
 			}),
 			body('dateOfBirth').custom((value) => {
+				if (!value) {
+					throw new Error('Date of birth is required');
+				}
 				if (value.match(/^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?$/)) {
 					return Utils.formatDateForDatabase(value);
 				}
@@ -113,7 +117,12 @@ class ValidatorHelper {
 			param('id', 'A valid record Identifier is required').exists().isUUID(),
 			body('constituencyName').optional().isString(),
 			body('representativeId', 'This representative is not found').optional()
-				.isUUID()
+				.custom(value => {
+					if (value && !validator.isUUID(value)) {
+						throw new Error('This representative could not be found');
+					}
+					return 'null';
+				})
 		];
 	}
 
@@ -124,7 +133,12 @@ class ValidatorHelper {
 			body('constituencyId', 'This constituency could not be found').optional()
 				.isUUID(),
 			body('representativeId', 'This representative is not found').optional()
-				.isUUID()
+				.custom(value => {
+					if (value && !validator.isUUID(value)) {
+						throw new Error('This representative could not be found');
+					}
+					return 'null';
+				})
 		];
 	}
 
@@ -135,7 +149,12 @@ class ValidatorHelper {
 			body('subCountyId', 'This SubCounty could not be found').optional()
 				.isUUID(),
 			body('representativeId', 'This representative is not found').optional()
-				.isUUID()
+				.custom(value => {
+					if (value && !validator.isUUID(value)) {
+						throw new Error('This representative could not be found');
+					}
+					return 'null';
+				})
 		];
 	}
 
@@ -146,7 +165,12 @@ class ValidatorHelper {
 			body('parishId', 'This parish could not be found').optional()
 				.isUUID(),
 			body('representativeId', 'This representative is not found').optional()
-				.isUUID()
+				.custom(value => {
+					if (value && !validator.isUUID(value)) {
+						throw new Error('This representative could not be found');
+					}
+					return 'null';
+				})
 		];
 	}
 }

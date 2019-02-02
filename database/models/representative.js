@@ -26,24 +26,29 @@ module.exports = (sequelize, DataTypes) => {
 		// associations can be defined here
 		Representative.hasOne(models.Constituency, {
 			foreignKey: 'representativeId',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 		Representative.hasOne(models.SubCounty, {
 			foreignKey: 'representativeId',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 		Representative.hasOne(models.Parish, {
 			foreignKey: 'representativeId',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 		Representative.hasOne(models.Village, {
 			foreignKey: 'representativeId',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 		Representative.belongsTo(models.Village, {
 			foreignKey: 'villageId',
 			targetKey: 'id',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 	};
 	return Representative;

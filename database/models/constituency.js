@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey: 'representativeId',
 			targetKey: 'id',
 			onDelete: 'SET NULL',
+			allowNull: true
 		});
 		Constituency.hasMany(models.SubCounty, {
 			foreignKey: 'constituencyId',

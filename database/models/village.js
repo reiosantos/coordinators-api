@@ -21,11 +21,13 @@ module.exports = (sequelize, DataTypes) => {
 		Village.belongsTo(models.Representative, {
 			foreignKey: 'representativeId',
 			targetKey: 'id',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 		Village.hasMany(models.Representative, {
 			foreignKey: 'villageId',
-			onDelete: 'SET NULL'
+			onDelete: 'SET NULL',
+			allowNull: true
 		});
 	};
 	return Village;

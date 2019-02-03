@@ -26,7 +26,7 @@ class UserActions {
 		const update = req.body;
 		
 		if (update.password && update.password.trim()) {
-			update.password = await hashPassword(user.password);
+			update.password = await hashPassword(update.password);
 		}
 		
 		try {

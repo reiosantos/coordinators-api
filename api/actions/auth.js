@@ -11,7 +11,7 @@ export const signup = async (req, res) => {
 		const userData = await DatabaseWrapper.findOne(USER_MODAL, { username: user.username });
 		
 		if (userData && userData.id ) {
-			return res.status(200).json({
+			return res.status(400).json({
 				message: 'This username is already taken, please choose a different name'
 			});
 		}

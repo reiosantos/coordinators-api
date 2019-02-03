@@ -15,7 +15,7 @@ passport.use(new LocalStrategy({
 	);
 
 	if (!user) {
-		return next(null, false, { errors: { user: 'username or password is invalid' } });
+		return next(null, false, { user: 'username or password is invalid' });
 	}
 
 	return validatePassword(password, user.password)
@@ -23,9 +23,7 @@ passport.use(new LocalStrategy({
 			if (isValid) {
 				return next(null, user);
 			}
-			return next(null, false, {
-				errors: { user: 'username or password is invalid.' }
-			});
+			return next(null, false, { user: 'username or password is invalid.' });
 		})
-		.catch(error => next(null, false, { errors: { error } }));
+		.catch(error => next(null, false, { user: error }));
 }));

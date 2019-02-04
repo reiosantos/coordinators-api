@@ -6,10 +6,10 @@
   "main": "api/index.js",
   "scripts": {
     "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false NODE_ENV=development yarn install",
-    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=production;",
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;",
     "serve": "babel-node lib/api/server.js",
-    "build": "babel ./ --out-dir lib/ --ignore ./node_modules",
-    "start": "export NPM_CONFIG_PRODUCTION=false NODE_ENV=production yarn run build && yarn run serve",
+    "build": "rimraf lib/ && babel ./ --out-dir lib/ --ignore ./node_modules",
+    "start": "NODE_ENV=production yarn run build && yarn run serve",
     "start:dev": "NODE_ENV=development DEBUG=coordinators nodemon --exec babel-node api/server.js",
     "lint": "node_modules/.bin/eslint ./",
     "test": "NODE_ENV=test mocha --require @babel/register --require dotenv/config --exit",

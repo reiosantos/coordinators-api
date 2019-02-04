@@ -6,8 +6,14 @@ import expressValidator from 'express-validator';
 import morgan from 'morgan';
 import swagger from 'swagger-ui-express';
 import env from '../config/environment';
-import swaggerDocument from '../swagger';
 import routes from './routes';
+
+let swaggerDocument = {};
+try {
+	swaggerDocument = require('../swagger');
+} catch (e) {
+
+}
 
 dotenv.config();
 

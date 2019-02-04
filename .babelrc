@@ -6,7 +6,6 @@
 		"@babel/plugin-proposal-class-properties",
 		"@babel/plugin-transform-runtime"
 	],
-	"compact": false,
 	"env": {
 		"test": {
 			"plugins": [

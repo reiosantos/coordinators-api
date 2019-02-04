@@ -8,7 +8,7 @@
     "serve": "nodemon --exec babel-node lib/api/server.js",
     "build": "rimraf lib/ && babel ./ --out-dir lib/ --ignore ./node_modules",
     "start": "NODE_ENV=production yarn run build && yarn run serve",
-    "start:dev": "NODE_ENV=development DEBUG=coordinators nodemon --exec babel api/server.js",
+    "start:dev": "NODE_ENV=development DEBUG=coordinators nodemon --exec babel-node api/server.js",
     "lint": "node_modules/.bin/eslint ./",
     "test": "NODE_ENV=test mocha --require @babel/register --require dotenv/config --exit",
     "test:coverage": "NODE_ENV=test nyc mocha --require @babel/register --require dotenv/config --exit",

@@ -1,0 +1,12 @@
+[Unit]
+Description=Script manages the api service
+After=network.target
+
+[Service]
+WorkingDirectory=/home/yosam_db/coordinators-api/deploy
+ExecStart=/bin/bash /home/yosam_db/coordinators-api/deploy/run-server.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

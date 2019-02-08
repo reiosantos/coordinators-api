@@ -1,6 +1,5 @@
 import { REPRESENTATIVE_MODAL } from '../constants';
 import DatabaseWrapper from '../models';
-import Utils from '../util';
 
 class RepresentativeActions {
 	static async getAllRepresentatives(req, res) {
@@ -21,18 +20,11 @@ class RepresentativeActions {
 	static async createRepresentative(req, res) {
 		const data = req.body;
 		try {
-			const newDate = Utils.formatDateForDatabase(data.dateOfBirth);
-			const representative = await DatabaseWrapper.createOne(REPRESENTATIVE_MODAL,
-				{ ...data, dateOfBirth: newDate });
+			const representative = await DatabaseWrapper.createOne(REPRESENTATIVE_MODAL, data);
 			return res.status(201).json({ record: representative });
 		} catch (err) {
 			if (err.name === 'SequelizeForeignKeyConstraintError') {
 				return res.status(400).json({ message: `Could not find the ${err.table} selected` });
-			}
-			if (err.name === 'SequelizeDatabaseError') {
-				return res.status(400).json({
-					message: `Invalid value for date ${data.dateOfBirth}`
-				});
 			}
 			if (err.name === 'SequelizeUniqueConstraintError') {
 				return res.status(400).json({

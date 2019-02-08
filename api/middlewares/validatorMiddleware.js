@@ -1,6 +1,5 @@
 import { body, param } from 'express-validator/check';
 import validator from 'validator'
-import Utils from '../util';
 
 class ValidatorHelper {
 	static validateCreateUser() {
@@ -29,17 +28,7 @@ class ValidatorHelper {
 				}
 				return value;
 			}),
-			body('dateOfBirth').custom((value) => {
-				if (!value) {
-					throw new Error('Date of birth is required');
-				}
-				if (value.match(/^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?$/)) {
-					return Utils.formatDateForDatabase(value);
-				}
-				throw new Error('The birth date is invalid. '
-						+ 'It should be in the format `YYY-MM-DD` or `YYY-MM-DD hh:mm:ss`');
-			}),
-			body('email', 'Email is invalid').optional().isEmail(),
+			body('nin', 'Email is invalid').optional().isString(),
 			body('villageId', 'A valid village identifier is required').isUUID()
 		];
 	}
@@ -100,14 +89,7 @@ class ValidatorHelper {
 				}
 				return value;
 			}),
-			body('dateOfBirth').optional().custom((value) => {
-				if (value.match(/^\d{4}-\d{2}-\d{2}( \d{2}:\d{2}:\d{2})?$/)) {
-					return Utils.formatDateForDatabase(value);
-				}
-				throw new Error('The birth date is invalid. '
-					+ 'It should be in the format `YYY-MM-DD` or `YYY-MM-DD hh:mm:ss`');
-			}),
-			body('email').optional().isEmail(),
+			body('nin').optional().isString(),
 			body('villageId').optional().isUUID()
 		];
 	}

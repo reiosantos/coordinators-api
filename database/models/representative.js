@@ -8,13 +8,9 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		firstName: DataTypes.STRING,
 		lastName: DataTypes.STRING,
-		email: {
+		nin: {
 			allowNull: true,
 			type: DataTypes.STRING
-		},
-		dateOfBirth: {
-			type: DataTypes.DATE,
-			defaultValue: sequelize.Date
 		},
 		contact: {
 			unique: true,

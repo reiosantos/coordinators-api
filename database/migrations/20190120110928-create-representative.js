@@ -13,13 +13,9 @@ module.exports = {
 		lastName: {
 			type: Sequelize.STRING
 		},
-		email: {
+		nin: {
 			allowNull: true,
 			type: Sequelize.STRING
-		},
-		dateOfBirth: {
-			type: Sequelize.DATE,
-			defaultValue: Sequelize.DATE
 		},
 		contact: {
 			unique: true,
